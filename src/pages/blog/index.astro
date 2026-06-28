@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Blog" description="Writing on Go, Kafka, event-driven systems, and reliability.">
+  <section class="section-tight">
+    <div class="container container-wide">
+      <h1 class="page-title">Writing</h1>
+      <p class="lead" style="margin-bottom:2.5rem">
+        Notes from production: Go, Kafka, stream processing, and the reliability
+        work behind payment and lending systems.
+      </p>
+      {
+        posts.length === 0 ? (
+          <p class="muted">No posts yet.</p>
+        ) : (
+          <div class="entry-list">
+            {posts.map((p) => (
+              <PostCard
+                href={`/blog/${p.id}/`}
+                title={p.data.title}
+                description={p.data.description}
+                pubDate={p.data.pubDate}
+                tags={p.data.tags}
+              />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

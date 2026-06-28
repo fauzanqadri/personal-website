@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WorkCard from '../components/WorkCard.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE } from '../data/site';
+
+const work = (await getCollection('work'))
+  .filter((w) => w.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+
+const services = [
+  {
+    title: 'Event-driven backends',
+    body: 'Kafka topics, consumers, and the idempotency and ordering guarantees that keep them correct. Modular monoliths and the right time to split them.',
+  },
+  {
+    title: 'Payment and lending platforms',
+    body: 'Repayment, disbursement, ledgers, and reconciliation. State machines and durable workflows for money movement that must not double-fire.',
+  },
+  {
+    title: 'Data pipelines and reliability',
+    body: 'Stream processing with Redpanda Connect, change-data-capture read models, and the performance work that keeps high-volume consumers alive.',
+  },
+];
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="section-tight">
+    <div class="container container-wide">
+      <p class="eyebrow">What I help with</p>
+      <div class="grid grid-3">
+        {
+          services.map((s) => (
+            <div class="card">
+              <h3>{s.title}</h3>
+              <p class="muted">{s.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container container-wide">
+      <p class="eyebrow">Selected work</p>
+      <div class="grid grid-2">
+        {
+          work.map((w) => (
+            <WorkCard
+              href={`/work/${w.id}/`}
+              title={w.data.title}
+              summary={w.data.summary}
+              stack={w.data.stack}
+            />
+          ))
+        }
+      </div>
+      <p style="margin-top:1.5rem"><a href="/work">All work &rarr;</a></p>
+    </div>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="section-tight">
+        <div class="container container-wide">
+          <p class="eyebrow">Recent writing</p>
+          <div class="grid grid-2">
+            {posts.map((p) => (
+              <PostCard
+                href={`/blog/${p.id}/`}
+                title={p.data.title}
+                description={p.data.description}
+                pubDate={p.data.pubDate}
+                tags={p.data.tags}
+              />
+            ))}
+          </div>
+          <p style="margin-top:1.5rem">
+            <a href="/blog">All writing &rarr;</a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="card" style="text-align:center">
+        <h2>Have a system that needs to be correct under load?</h2>
+        <p class="muted" style="max-width:48ch;margin:0 auto 1.5rem">
+          I take on backend architecture, platform, and reliability work on a
+          consulting basis. Tell me what you are building.
+        </p>
+        <a class="btn btn-primary" href={`mailto:${SITE.email}`}>Get in touch</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

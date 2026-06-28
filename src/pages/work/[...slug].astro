@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import WorkCase from '../../layouts/WorkCase.astro';
+
+export async function getStaticPaths() {
+  const work = await getCollection('work');
+  return work.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<WorkCase
+  title={entry.data.title}
+  summary={entry.data.summary}
+  role={entry.data.role}
+  stack={entry.data.stack}
+  outcome={entry.data.outcome}
+>
+  <Content />
+</WorkCase>

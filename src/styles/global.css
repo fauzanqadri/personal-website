@@ -1,0 +1,504 @@
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Clean modern professional: sans-serif, generous whitespace, one accent color.
+   Light by default, dark via prefers-color-scheme.
+---------------------------------------------------------------------------- */
+:root {
+  /* color: light */
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fa;
+  --surface: #ffffff;
+  --border: #e4e7ec;
+  --text: #1a1f2b;
+  --text-muted: #5b6472;
+  --text-faint: #8a93a2;
+  --accent: #1f6feb;
+  --accent-strong: #1a5fd0;
+  --accent-soft: #e8f0fe;
+  --code-bg: #f6f8fa;
+
+  /* type */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* scale */
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: 2.1rem;
+  --step-4: 2.9rem;
+
+  /* spacing */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 3rem;
+  --space-5: 5rem;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --maxw: 760px;
+  --maxw-wide: 1040px;
+
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.04),
+    0 4px 18px rgba(16, 24, 40, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --bg-subtle: #131a23;
+    --surface: #161b22;
+    --border: #232b36;
+    --text: #e8ecf1;
+    --text-muted: #a7b1bf;
+    --text-faint: #6e7888;
+    --accent: #589bff;
+    --accent-strong: #7cb0ff;
+    --accent-soft: #16263f;
+    --code-bg: #0f151d;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 22px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+---------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  font-weight: 680;
+  letter-spacing: -0.012em;
+  margin: 0 0 var(--space-2);
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+h2 {
+  font-size: var(--step-2);
+}
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  margin: 0 0 var(--space-2);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.1em 0.36em;
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  overflow-x: auto;
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--space-4) 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--step--1);
+  margin: 0 0 var(--space-2);
+}
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.7em;
+  text-align: left;
+}
+th {
+  background: var(--bg-subtle);
+}
+
+blockquote {
+  margin: 0 0 var(--space-2);
+  padding: 0.4em 0 0.4em 1.1em;
+  border-left: 3px solid var(--accent);
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout helpers
+---------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+.container-wide {
+  max-width: var(--maxw-wide);
+}
+
+.section {
+  padding: var(--space-5) 0;
+}
+.section-tight {
+  padding: var(--space-4) 0;
+}
+
+.eyebrow {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 var(--space-1);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.lead {
+  font-size: var(--step-1);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* placeholder text the site owner still needs to fill in */
+.placeholder {
+  color: var(--text-faint);
+  font-style: italic;
+}
+.placeholder::before {
+  content: "[ ";
+}
+.placeholder::after {
+  content: " ]";
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons
+---------------------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.7em 1.3em;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--step-0);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--accent-strong);
+  color: #fff;
+  text-decoration: none;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Cards and grids
+---------------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--space-3);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  transition: border-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+a.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+}
+.card h3 {
+  margin-bottom: var(--space-1);
+  color: var(--text);
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+.tag {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.18em 0.7em;
+}
+
+/* ---------------------------------------------------------------------------
+   Header / nav
+---------------------------------------------------------------------------- */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(160%) blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+.brand {
+  font-weight: 700;
+  font-size: var(--step-1);
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.brand:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+.nav {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+.nav a {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+---------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-5);
+  padding: var(--space-4) 0;
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-links {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero
+---------------------------------------------------------------------------- */
+.hero {
+  padding: var(--space-5) 0 var(--space-4);
+}
+.hero h1 {
+  max-width: 16ch;
+}
+.hero .lead {
+  max-width: 52ch;
+  margin-bottom: var(--space-3);
+}
+.hero-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Article (blog post / case study body)
+---------------------------------------------------------------------------- */
+.prose {
+  max-width: var(--maxw);
+}
+.prose h2 {
+  margin-top: var(--space-4);
+}
+.prose h3 {
+  margin-top: var(--space-3);
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.3em;
+}
+.prose li {
+  margin-bottom: 0.35em;
+}
+
+.page-title {
+  margin-bottom: var(--space-1);
+}
+.meta {
+  color: var(--text-faint);
+  font-size: var(--step--1);
+  margin-bottom: var(--space-4);
+}
+
+/* list of posts / work */
+.entry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* simple definition rows for the CV */
+.cv-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--border);
+}
+.cv-row h3 {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+---------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  :root {
+    --step-4: 2.2rem;
+    --step-3: 1.8rem;
+  }
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .cv-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+  .nav {
+    gap: var(--space-2);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print (CV prints cleanly to PDF)
+---------------------------------------------------------------------------- */
+@media print {
+  .site-header,
+  .site-footer,
+  .hero-actions,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    color: #000;
+    background: #fff;
+    font-size: 11pt;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+}

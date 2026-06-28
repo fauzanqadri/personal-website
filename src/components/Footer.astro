@@ -1,0 +1,22 @@
+---
+import { SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+
+const links = [
+  { key: 'github', label: 'GitHub', href: `https://github.com/${SITE.social.github}` },
+  { key: 'linkedin', label: 'LinkedIn', href: `https://linkedin.com/in/${SITE.social.linkedin}` },
+  { key: 'twitter', label: 'X', href: `https://x.com/${SITE.social.twitter}` },
+].filter((l) => SITE.social[l.key as keyof typeof SITE.social]);
+---
+
+<footer class="site-footer">
+  <div class="container container-wide">
+    <span>&copy; {year} {SITE.name}</span>
+    <div class="footer-links">
+      <a href={`mailto:${SITE.email}`}>Email</a>
+      {links.map((l) => <a href={l.href} rel="me noopener" target="_blank">{l.label}</a>)}
+      <a href="/rss.xml">RSS</a>
+    </div>
+  </div>
+</footer>

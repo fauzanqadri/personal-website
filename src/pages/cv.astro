@@ -1,0 +1,156 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+const work = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Skills below are verifiable from real shipped work. Edit freely.
+const skillGroups = [
+  { label: 'Languages', items: ['Go', 'Elixir', 'Ruby', 'Node.js'] },
+  {
+    label: 'Messaging & streaming',
+    items: ['Apache Kafka', 'Redpanda Connect', 'IBM/sarama', 'Bloblang'],
+  },
+  {
+    label: 'Data stores',
+    items: ['PostgreSQL', 'MySQL', 'Elasticsearch', 'Redis'],
+  },
+  {
+    label: 'Orchestration & infra',
+    items: ['Temporal', 'Kubernetes', 'Docker', 'Helm'],
+  },
+  {
+    label: 'Architecture',
+    items: ['Event-driven architecture', 'CQRS', 'DDD', 'Modular monolith'],
+  },
+  { label: 'Observability', items: ['Prometheus', 'Grafana'] },
+];
+---
+
+<BaseLayout title="CV" description={`${SITE.name}. ${SITE.role}. Curriculum vitae.`}>
+  <section class="section-tight">
+    <div class="container">
+      <h1 class="page-title">{SITE.name}</h1>
+      <p class="lead" style="margin-bottom:0.5rem">{SITE.role}</p>
+      <p class="no-print">
+        <a href="javascript:window.print()" class="btn btn-ghost">Download as PDF</a>
+      </p>
+
+      <h2 style="margin-top:3rem">Summary</h2>
+      <p>
+        Principal engineer with about a decade across payments, merchant
+        platforms, and lending. I design systems around clear data contracts:
+        Kafka event schemas, idempotent consumers, durable workflows, and CQRS
+        read models, and I keep them correct under load. I write the
+        architecture down, so a team can extend it without me in the room.
+      </p>
+
+      <h2 style="margin-top:2.5rem">Skills</h2>
+      {
+        skillGroups.map((g) => (
+          <div class="cv-row">
+            <h3>{g.label}</h3>
+            <div class="skills">
+              {g.items.map((s) => (
+                <span class="tag">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+
+      <h2 style="margin-top:2.5rem">Selected work</h2>
+      {
+        work.map((w) => (
+          <div class="cv-row">
+            <h3>
+              <a href={`/work/${w.id}/`}>{w.data.title}</a>
+            </h3>
+            <div>
+              <p style="margin-bottom:0.4rem">{w.data.summary}</p>
+              <span class="muted" style="font-size:0.85rem">
+                {w.data.stack.join(' · ')}
+              </span>
+            </div>
+          </div>
+        ))
+      }
+
+      <h2 style="margin-top:2.5rem">Experience</h2>
+      <div class="cv-row">
+        <h3>2023 to Present</h3>
+        <div>
+          <strong>Principal Engineer</strong>, Amartha
+          <p class="muted" style="margin-top:0.3rem">
+            Lending platform. Architecture and backend work on the
+            debt-collection engine and the event-driven services around it:
+            rule-driven evaluation over a multi-million-case book, durable
+            workflows, CQRS read models, and the reliability work behind them.
+          </p>
+        </div>
+      </div>
+      <div class="cv-row">
+        <h3>2019 to 2023</h3>
+        <div>
+          <strong>Software Engineer</strong>, Gojek
+          <p class="muted" style="margin-top:0.3rem">
+            Merchant platform team. Built merchant onboarding and the
+            authentication service for the restaurant and business apps, serving
+            hundreds of thousands of profile and login requests.
+          </p>
+        </div>
+      </div>
+      {/* Midtrans was acquired into the Gojek group, so the Midtrans and Gojek
+          dates overlap on LinkedIn. Confirmed by Fauzan. Rendered as 2014 to
+          2019 with the acquisition noted so the timeline reads correctly. */}
+      <div class="cv-row">
+        <h3>2014 to 2019</h3>
+        <div>
+          <strong>Software Engineer</strong>, Midtrans
+          <p class="muted" style="margin-top:0.3rem">
+            Payments. Early engineer on the Snap hosted payment page, which lets
+            merchants integrate once and start accepting payments. Then a team
+            building a rule-based fraud-detection system over hundreds of
+            thousands of card transactions. Midtrans was acquired into the Gojek
+            group during this time, which led to my move to the merchant
+            platform team.
+          </p>
+        </div>
+      </div>
+
+      <h2 style="margin-top:2.5rem">Education</h2>
+      <div class="cv-row">
+        <h3>2009 to 2014</h3>
+        <div>
+          <strong>Computer Science</strong>, UIN Syarif Hidayatullah Jakarta
+        </div>
+      </div>
+
+      <h2 style="margin-top:2.5rem">Writing</h2>
+      <p>
+        I publish notes from production on the
+        <a href="/blog">blog</a>: Go, Kafka, stream processing, and the
+        reliability work behind payment and lending systems.
+      </p>
+
+      <h2 style="margin-top:2.5rem">Contact</h2>
+      <div class="cv-row">
+        <h3>Email</h3>
+        <div>
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+      </div>
+      <div class="cv-row">
+        <h3>LinkedIn</h3>
+        <div>
+          <a href={`https://linkedin.com/in/${SITE.social.linkedin}`} rel="me noopener" target="_blank">
+            linkedin.com/in/{SITE.social.linkedin}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

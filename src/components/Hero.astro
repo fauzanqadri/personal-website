@@ -1,0 +1,20 @@
+---
+import { SITE } from '../data/site';
+---
+
+<section class="hero">
+  <div class="container container-wide">
+    <p class="eyebrow">{SITE.role}</p>
+    <h1>{SITE.tagline}</h1>
+    <p class="lead">
+      Principal engineer with about a decade across payments, merchant
+      platforms, and lending. I work on the parts of a system that have to be
+      correct under load: event-driven backends, money-movement flows, and the
+      data pipelines that feed them. Go, Kafka, Temporal, PostgreSQL.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={`mailto:${SITE.email}`}>Get in touch</a>
+      <a class="btn btn-ghost" href="/work">See selected work</a>
+    </div>
+  </div>
+</section>

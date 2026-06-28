@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+
+const work = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout title="Work" description="Selected backend, platform, and reliability engagements.">
+  <section class="section-tight">
+    <div class="container container-wide">
+      <h1 class="page-title">Work</h1>
+      <p class="lead" style="margin-bottom:2.5rem">
+        Selected work, presented as anonymized case studies. Employer and
+        internal details are withheld; the problem, the design, and the outcome
+        are real.
+      </p>
+      <div class="grid grid-2">
+        {
+          work.map((w) => (
+            <WorkCard
+              href={`/work/${w.id}/`}
+              title={w.data.title}
+              summary={w.data.summary}
+              stack={w.data.stack}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  stack: string[];
+}
+const { href, title, summary, stack } = Astro.props;
+---
+
+<a class="card" href={href}>
+  <h3>{title}</h3>
+  <p class="muted">{summary}</p>
+  <div class="tag-row">
+    {stack.slice(0, 6).map((s) => <span class="tag">{s}</span>)}
+  </div>
+</a>
